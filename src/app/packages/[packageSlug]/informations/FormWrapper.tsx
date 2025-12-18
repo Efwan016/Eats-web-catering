@@ -19,7 +19,7 @@ export default function FormWrapper({
   price,
 }: Props) {
   const searchParams = useSearchParams();
-  const quantity = search-params.get("quantity") ?? "0";
+  const quantity = searchParams.get("quantity") ?? "0";
 
   const total = (price ?? 0) * parseInt(quantity);
   const tax = total * 0.11;

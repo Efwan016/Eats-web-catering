@@ -9,7 +9,7 @@ import Promo from "@/aseets/icons/Promo";
 import Truck from "@/aseets/icons/Truck";
 import User from "@/aseets/icons/User";
 
-type Props = {};
+type Props = object;
 
 export default function Form({}: Props) {
   return (
