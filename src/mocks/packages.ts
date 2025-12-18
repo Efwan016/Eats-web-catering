@@ -1,20 +1,31 @@
+export interface PackageCategory {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface PackageCity {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface PackageTier {
+  price: number;
+  quantity: number;
+}
+
 export interface Package {
   id: number;
   name: string;
   slug: string;
   thumbnail: string;
-  is_popular: number;
-  category?: {
-    name: string;
-  };
-  city?: {
-    name: string;
-  };
-  tiers?: {
-    price: number;
-    quantity: number;
-  }[];
+  is_popular: 0 | 1;
+  category: PackageCategory;
+  city: PackageCity;
+  tiers: PackageTier[];
 }
+ 
 
 export const packages: Package[] = [
   {
@@ -23,8 +34,16 @@ export const packages: Package[] = [
     slug: "nasi-box-premium",
     thumbnail: "/images/categories/nasi-box.png",
     is_popular: 1,
-    category: { name: "Nasi Box" },
-    city: { name: "Jakarta" },
+    category: {
+      id: 1,
+      name: "Nasi Box",
+      slug: "nasi-box",
+    },
+    city: {
+      id: 1,
+      name: "Jakarta",
+      slug: "jakarta",
+    },
     tiers: [
       { price: 25000, quantity: 20 },
       { price: 22000, quantity: 50 },
@@ -35,9 +54,17 @@ export const packages: Package[] = [
     name: "Snack Box Meeting",
     slug: "snack-box-meeting",
     thumbnail: "/images/categories/snack.png",
-    is_popular: 1,
-    category: { name: "Snack" },
-    city: { name: "Bandung" },
+    is_popular: 0,
+    category: {
+      id: 2,
+      name: "Snack",
+      slug: "snack",
+    },
+    city: {
+      id: 2,
+      name: "Bandung",
+      slug: "bandung",
+    },
     tiers: [
       { price: 15000, quantity: 30 },
       { price: 13000, quantity: 60 },
@@ -49,8 +76,16 @@ export const packages: Package[] = [
     slug: "tumpeng-mini",
     thumbnail: "/images/categories/tumpeng.png",
     is_popular: 1,
-    category: { name: "Tumpeng" },
-    city: { name: "Surabaya" },
+    category: {
+      id: 3,
+      name: "Tumpeng",
+      slug: "tumpeng",
+    },
+    city: {
+      id: 3,
+      name: "Surabaya",
+      slug: "surabaya",
+    },
     tiers: [
       { price: 350000, quantity: 10 },
       { price: 300000, quantity: 20 },
@@ -62,8 +97,16 @@ export const packages: Package[] = [
     slug: "prasmanan",
     thumbnail: "/images/categories/prasmanan.png",
     is_popular: 1,
-    category: { name: "Prasmanan" },
-    city: { name: "Jakarta" },
+    category: {
+      id: 4,
+      name: "Prasmanan",
+      slug: "prasmanan",
+    },
+    city: {
+      id: 1,
+      name: "Jakarta",
+      slug: "jakarta",
+    },
     tiers: [
       { price: 50000, quantity: 100 },
       { price: 45000, quantity: 200 },
@@ -72,14 +115,23 @@ export const packages: Package[] = [
   {
     id: 5,
     name: "Desserts Box",
-    slug: "dessert packages",
+    slug: "desserts-box",
     thumbnail: "/images/categories/dessert.png",
     is_popular: 1,
-    category: { name: "Dessert" },
-    city: { name: "Bogor" },
+    category: {
+      id: 5,
+      name: "Dessert",
+      slug: "dessert",
+    },
+    city: {
+      id: 4,
+      name: "Bogor",
+      slug: "bogor",
+    },
     tiers: [
       { price: 18000, quantity: 25 },
       { price: 16000, quantity: 50 },
     ],
   },
 ];
+

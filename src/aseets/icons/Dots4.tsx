@@ -1,4 +1,4 @@
-export default function More() {
+export default function Dots4Icon() {
     return (
         <svg
             width="24"

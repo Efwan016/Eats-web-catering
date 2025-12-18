@@ -1,53 +1,45 @@
-"use client";
-
 import Image from "next/image";
-import Slider from "@/components/Slider";
-import { testimonials, Testimonial } from "@/mocks/testimonials";
+
+import { Testimonial } from "@/mocks/testimonials";
 import Star from "@/aseets/icons/Star";
 
-/* -----------------------------
-   CARD ITEM
------------------------------ */
-export function ContentTestimonial({ data }: { data: Testimonial }) {
+type Props = {
+  data: Testimonial;
+};
+
+export function ContentTestimonial({ data }: Props) {
   return (
-    <div className="h-full rounded-3xl overflow-hidden relative border p-3 flex flex-col gap-y-3">
-      <span className="text-amber-600 text-xs flex gap-x-1">
-        <Star /><Star /><Star /><Star /><Star />
-      </span>
+    <div className="bg-white h-full rounded-2xl p-4 flex flex-col justify-between">
+      <div>
+        <div className="flex gap-x-1">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star
+              key={i}
+              className={`w-5 h-5 ${
+                i < data.rating ? "text-yellow-400" : "text-gray-300"
+              }`}
+            />
+          ))}
+        </div>
 
-      <p className="italic text-sm font-semibold leading-6">
-        “{data.message}”
-      </p>
+        <p className="italic text-gray-600 mt-2">“{data.message}”</p>
+      </div>
 
-      <div className="flex gap-x-3 items-center">
-        <figure className="w-9 aspect-square relative rounded-full overflow-hidden">
+      <div className="flex gap-x-3 items-center mt-4">
+        <figure className="w-12 h-12 relative rounded-full overflow-hidden">
           <Image
             src={data.photo}
             alt={data.name}
             fill
-            sizes="36px"
+            sizes="48px"
             className="object-cover"
           />
         </figure>
-        <span className="font-semibold">{data.name}</span>
+        <div>
+          <p className="font-bold text-black">{data.name}</p>
+        </div>
       </div>
     </div>
   );
 }
 
-/* -----------------------------
-   WRAPPER (DEFAULT EXPORT)
------------------------------ */
-export default function Testimonials() {
-  return (
-    <Slider
-      spaceBetween={20}
-      swipeClassName="!h-[156px] !px-4"
-      swipeSlideClassName="!w-[280px]"
-    >
-      {testimonials.map((item: Testimonial) => (
-        <ContentTestimonial key={item.id} data={item} />
-      ))}
-    </Slider>
-  );
-}

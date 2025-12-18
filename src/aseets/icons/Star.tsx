@@ -1,6 +1,7 @@
-export default function Star() {
+export default function Star({ className }: { className?: string }) {
     return (
          <svg
+            className={className}
                     width="20"
                     height="19"
                     viewBox="0 0 20 19"

@@ -1,10 +1,11 @@
-'use client'
+"use client";
+
 import React, { Children, ReactNode } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { A11y, Navigation, Pagination } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import { A11y, Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
 type Props = {
   children: ReactNode;
@@ -32,10 +33,10 @@ const Slider = ({
       slidesPerView="auto"
       spaceBetween={spaceBetween}
       modules={modules}
-      className={swipeClassName}
+      className={`${swipeClassName} custom-swiper`}
       pagination={hasPagination ? { clickable: true } : undefined}
     >
-      {Children.toArray(children).map((slide, index) => (
+      {Children.map(children, (slide, index) => (
         <SwiperSlide
           key={React.isValidElement(slide) ? slide.key ?? index : index}
           className={swipeSlideClassName}

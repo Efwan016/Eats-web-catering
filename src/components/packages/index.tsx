@@ -1,148 +1,68 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import Slider from "@/components/Slider";
 
-
-import { packages, Package } from "@/mocks/packages";
+import { Package } from "@/mocks/packages";
 import Notes from "@/aseets/icons/Notes";
 import People from "@/aseets/icons/People";
-import PinPoint from "@/aseets/icons/PinPoint";
+import Star from "@/aseets/icons/Star";
 
 type Props = {
-  show: "popular" | "newest";
+  data: Package;
 };
 
-/* -----------------------------
-   POPULAR
------------------------------ */
-export function ContentPopular({ data }: { data: Package[] }) {
-  if (!data.length) return <p className="px-4">No Data</p>;
+export function ContentPackage({ data }: Props) {
+  const currentTier = data.tiers.length
+    ? data.tiers.reduce((min, curr) => (curr.price < min.price ? curr : min))
+    : null;
 
   return (
-    <Slider
-      spaceBetween={20}
-      swipeClassName="!h-[260px] !px-4"
-      swipeSlideClassName="!w-[240px]"
+    <Link
+      href={`/packages/${data.slug}`}
+      className="bg-white rounded-2xl p-3 shadow-md transition-all hover:shadow-lg"
     >
-      {data.map((item) => (
-        <div key={item.id} className="h-full rounded-3xl overflow-hidden relative border">
-          <figure className="absolute w-full h-full">
-            <Image
-              src={item.thumbnail}
-              alt={item.name}
-              fill
-              sizes="240px"
-              className="object-cover"
-            />
-          </figure>
+      <div className="relative aspect-video rounded-xl overflow-hidden">
+        <Image
+          src={data.thumbnail}
+          alt={data.name}
+          fill
+          sizes="(max-width: 768px) 100vw, 25vw"
+          priority
+          className="object-cover"
+        />
 
-          <div className="absolute bottom-2 left-2 right-2 bg-white rounded-2xl p-3">
-            <span className="font-semibold">{item.name}</span>
+        <div className="absolute top-2 left-2 flex items-center gap-x-1 bg-black/50 text-white px-2 py-1 rounded-full">
+          <Star />
 
-            <div className="flex gap-x-3 mt-1 text-sm text-gray-500">
-              <div className="flex items-center gap-x-1">
-                <Notes />
-                <span>{item.category?.name}</span>
-              </div>
-
-              <div className="flex items-center gap-x-1">
-                <People />
-                <span>{item.tiers?.[0]?.quantity ?? 0}</span>
-              </div>
-            </div>
-          </div>
-
-          <Link href={`/packages/${item.slug}`} className="absolute inset-0" />
         </div>
-      ))}
-    </Slider>
-  );
-}
+      </div>
 
-/* -----------------------------
-   NEWEST
------------------------------ */
-export function ContentNewest({
-  data,
-  withDetailsQuantity = false,
-}: {
-  data: Package[];
-  withDetailsQuantity?: boolean;
-}) {
-  if (!data.length) return <p className="px-4">No Data</p>;
+      <div className="mt-3">
+        <h3 className="font-bold text-lg text-gray-800 line-clamp-1">
+          {data.name}
+        </h3>
 
-  return (
-    <div className="flex flex-col gap-y-4 px-4">
-      {data.map((item) => {
-        const tiers = item.tiers ?? [];
+        <div className="flex items-start justify-between gap-x-3 mt-1">
+          <div className="flex gap-x-3 text-gray-500 text-sm min-w-0">
+            <span className="flex gap-x-1 items-center truncate">
+              <Notes  />
+              <span className="truncate">{data.category.name}</span>
+            </span>
 
-        const lowest = tiers.reduce(
-          (min, cur) => (cur.price < min.price ? cur : min),
-          tiers[0] ?? { price: 0, quantity: 0 }
-        );
-
-        const highest = tiers.reduce(
-          (max, cur) => (cur.price > max.price ? cur : max),
-          tiers[0] ?? { price: 0, quantity: 0 }
-        );
-
-        return (
-          <div key={item.id} className="flex relative gap-x-3">
-            <figure className="w-30 h-40 rounded-2xl overflow-hidden relative">
-              <Image
-                src={item.thumbnail}
-                alt={item.name}
-                fill
-                sizes="120px"
-                className="object-cover"
-              />
-            </figure>
-
-            <div className="flex flex-col gap-y-2 pt-3">
-              <span className="font-semibold">{item.name}</span>
-
-              <div className="flex items-center gap-x-1 text-sm text-gray-500">
-                <Notes />
-                <span>{item.category?.name}</span>
-              </div>
-
-              <div className="flex items-center gap-x-1 text-sm text-gray-500">
-                <People />
-                <span>
-                  {lowest.quantity}
-                  {withDetailsQuantity && ` - ${highest.quantity} people`}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-x-1 text-sm text-gray-500">
-                <PinPoint />
-                <span>{item.city?.name}</span>
-              </div>
-            </div>
-
-            <Link href={`/packages/${item.slug}`} className="absolute inset-0" />
+            <span className="flex gap-x-1 items-center whitespace-nowrap">
+              <People  />
+              {currentTier?.quantity ?? 0} pax
+            </span>
           </div>
-        );
-      })}
-    </div>
+
+         
+          <p className="font-bold text-amber-500 whitespace-nowrap shrink-0">
+            Rp{currentTier?.price.toLocaleString("id-ID")}
+          </p>
+        </div>
+      </div>
+     
+
+    </Link>
   );
 }
 
-/* -----------------------------
-   SECTION (DEFAULT EXPORT)
------------------------------ */
-export default function Packages({ show }: Props) {
-  const data = packages;
-
-  if (show === "popular") {
-    return <ContentPopular data={data.filter((i) => i.is_popular === 1)} />;
-  }
-
-  if (show === "newest") {
-    return <ContentNewest data={data} />;
-  }
-
-  return null;
-}

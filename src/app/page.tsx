@@ -1,12 +1,17 @@
 import Image from "next/image";
+import Link from "next/link";
+
+import { packages } from "@/mocks/packages";
+import { testimonials } from "@/mocks/testimonials";
 
 import Slider from "@/components/Slider";
-import Categories from "@/components/categories";
-import Packages from "@/components/packages";
-import Testimonials from "@/components/testimonial";
+import { ContentCategories } from "@/components/categories";
+import { ContentPackage } from "@/components/packages";
+import { ContentTestimonial } from "@/components/testimonial";
 import BottomBar from "@/components/bottomBar";
 import LogoKaterina from "@/aseets/icons/LogoKaterina";
 import FlagIdn from "@/aseets/icons/FlagIdn";
+import Dots4 from "@/aseets/icons/Dots4";
 
 type SlideItemProps = {
   image: string;
@@ -15,7 +20,7 @@ type SlideItemProps = {
 };
 
 const SlideItem = ({ image, alt, priority = false }: SlideItemProps) => (
-  <div className="h-full rounded-3xl overflow-hidden relative border">
+  <div className="h-full rounded-2xl overflow-hidden relative">
     <figure className="relative h-full">
       <Image
         src={image}
@@ -26,20 +31,9 @@ const SlideItem = ({ image, alt, priority = false }: SlideItemProps) => (
         className="object-cover object-center"
       />
     </figure>
-
-    <div className="absolute inset-0 bg-linear-to-r from-black/50 to-black/0" />
-
-    <div className="absolute inset-y-0 left-0 px-4 md:px-6 w-full max-w-sm flex flex-col justify-center font-bold">
-      <span className="text-white text-lg md:text-xl">Sale</span>
-      <span className="text-amber-600 text-4xl md:text-5xl">50%</span>
-      <span className="text-white text-lg md:text-xl">Potongan</span>
-    </div>
   </div>
 );
 
-// -----------------------------
-// MAIN HOME COMPONENT
-// -----------------------------
 export default function Home() {
   const slides = [
     { image: "/images/asset/slide1.png", alt: "Promo 50% Potongan" },
@@ -47,81 +41,111 @@ export default function Home() {
     { image: "/images/asset/slide3.png", alt: "Promo 50% Potongan" },
   ];
 
+  const popularPackages = packages.filter((p) => p.is_popular === 1);
+
   return (
-    <div className="antialiased bg-slate-50 text-slate-800">
+    <div className="bg-gray-50 text-slate-800">
       <div className="max-w-3xl mx-auto">
         {/* HEADER */}
-        <header
-          className="
-            top-4 z-50
-            flex items-center justify-between
-            p-2
-            bg-amber-600/90
-            shadow-xl shadow-amber-600/10
-            backdrop-blur-md
-            border border-amber-200/30
-            mx-4
-          "
-        >
-          {/* Left Section */}
-          <div className="flex items-center gap-x-2 md:gap-x-4">
-            <LogoKaterina/>
-            <span className="font-semibold text-lg md:text-xl tracking-wide text-white drop-shadow">
+        <header className="top-4 z-50 flex items-center justify-between p-3 bg-amber-400 shadow-lg border-gray-200/80 backdrop-blur-md mx-4 rounded-full">
+          <div className="flex items-center gap-x-2">
+            <LogoKaterina />
+            <span className="font-bold text-lg tracking-wide text-gray-800">
               Adzani
             </span>
           </div>
 
-          {/* Language Button */}
-          <button
-            className="
-            flex items-center gap-x-2
-            border border-white/30
-            rounded-full
-            py-1.5 px-3
-            text-white
-            backdrop-blur-lg
-            hover:bg-white/30 transition-colors
-          "
-          >
+          <button className="flex items-center gap-x-2 border border-gray-200 rounded-full py-1.5 px-3 backdrop-blur-lg hover:bg-gray-100 transition-colors">
             <FlagIdn />
             <span className="text-sm font-medium">IDN</span>
           </button>
         </header>
 
         {/* MAIN CONTENT */}
-        <main className="py-6 md:py-8 space-y-12">
+        <main className="py-6 md:py-8 space-y-10">
           {/* SLIDER SECTION */}
-          <section className="relative px-4">
+          <section className="relative">
             <Slider
-              spaceBetween={20}
-              swipeClassName="h-[200px] md:h-[250px]"
+              spaceBetween={16}
+              swipeClassName="h-[180px] md:h-[220px] !px-4"
               swipeSlideClassName="max-w-md"
             >
               {slides.map((s, i) => (
-                <SlideItem key={i} image={s.image} alt={s.alt} priority={i === 0} />
+                <SlideItem
+                  key={i}
+                  image={s.image}
+                  alt={s.alt}
+                  priority={i === 0}
+                />
               ))}
             </Slider>
           </section>
 
           {/* CATEGORIES */}
-          <Categories title="Browse Categories" />
+          <section className="relative space-y-4">
+            <div className="flex justify-between items-center px-4">
+              <h2 className="font-bold text-xl">Categories</h2>
+              <Link
+                href="/categories"
+                className="flex items-center gap-x-1 text-amber-500"
+              >
+                <span>See all</span>
+                <Dots4 />
+              </Link>
+            </div>
+            <ContentCategories />
+          </section>
 
           {/* POPULAR SECTION */}
           <section className="relative space-y-4">
-            <h2 className="font-semibold text-xl md:text-2xl px-4">Most People Love It</h2>
-            <Packages show="popular" />
+            <div className="flex justify-between items-center px-4">
+              <h2 className="font-bold text-xl">Most Popular</h2>
+              <Link
+                href="/packages"
+                className="flex items-center gap-x-1 text-amber-500"
+              >
+                <span>See all</span>
+                <Dots4 />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 px-4">
+              {popularPackages.map((pkg) => (
+                <ContentPackage key={pkg.id} data={pkg} />
+              ))}
+            </div>
           </section>
 
           {/* TESTIMONIALS SECTION */}
           <section className="relative space-y-4">
-            <h2 className="font-semibold text-xl md:text-2xl px-4">People Love It</h2>
-            <Testimonials />
+            <h2 className="font-bold text-xl px-4">Testimonials</h2>
+            <Slider
+              swipeClassName="!px-4"
+              swipeSlideClassName="!w-[320px] !h-auto"
+            >
+              {testimonials.map((item) => (
+                <ContentTestimonial key={item.id} data={item} />
+              ))}
+            </Slider>
           </section>
 
           {/* NEWEST SECTION */}
           <section className="relative space-y-4">
-            <h2 className="font-semibold text-xl md:text-2xl px-4">Fresh From Kitchen</h2>
-            <Packages show="newest" />
+            <div className="flex justify-between items-center px-4">
+              <h2 className="font-bold text-xl">Newest Packages</h2>
+              <Link
+                href="/packages"
+                className="flex items-center gap-x-1 text-amber-500"
+              >
+                <span>See all</span>
+                <Dots4 />
+              </Link>
+            </div>
+            <div className="grid gap-4 px-4">
+              {packages.map((pkg) => (
+                <ContentPackage key={pkg.id} data={pkg} />
+              ))}
+            </div>
           </section>
         </main>
       </div>

@@ -1,6 +1,7 @@
-export default function PromoIcon() {
+export default function PromoIcon({ className }: { className?: string }) {
     return (
              <svg
+                className={className}
                 width="26"
                 height="26"
                 viewBox="0 0 26 26"
