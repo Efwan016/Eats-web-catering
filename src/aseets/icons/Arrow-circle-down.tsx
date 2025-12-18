@@ -1,6 +1,9 @@
-export default function ArrowCircleDown() {
+import React from 'react';
+
+export default function ArrowCircleDown(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg
+            {...props}
             width="24"
             height="24"
             viewBox="0 0 24 24"
