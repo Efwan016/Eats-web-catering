@@ -80,7 +80,7 @@ export default function Form({}: Props) {
                 Phone
               </label>
               <div className="relative">
-                <Phone className="absolute top-1/2 -translate-y-1/2 left-4 text-gray-500" />
+                <Phone  />
                 <input
                   type="tel"
                   id="phone"
