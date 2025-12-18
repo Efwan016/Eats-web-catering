@@ -1,6 +1,9 @@
-export default function ArrowCircleLeft() {
+import React from 'react';
+
+export default function ArrowCircleLeft(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg
+            {...props}
             width="28"
             height="28"
             viewBox="0 0 28 28"
