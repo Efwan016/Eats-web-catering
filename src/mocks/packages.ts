@@ -11,6 +11,7 @@ export interface PackageCity {
 }
 
 export interface PackageTier {
+  id: number;
   price: number;
   quantity: number;
 }
@@ -45,8 +46,8 @@ export const packages: Package[] = [
       slug: "jakarta",
     },
     tiers: [
-      { price: 25000, quantity: 20 },
-      { price: 22000, quantity: 50 },
+      { id:1, price: 25000, quantity: 20 },
+      { id:2,price: 22000, quantity: 50 },
     ],
   },
   {
@@ -66,8 +67,8 @@ export const packages: Package[] = [
       slug: "bandung",
     },
     tiers: [
-      { price: 15000, quantity: 30 },
-      { price: 13000, quantity: 60 },
+      { id:1, price: 15000, quantity: 30 },
+      { id:2, price: 13000, quantity: 60 },
     ],
   },
   {
@@ -87,8 +88,8 @@ export const packages: Package[] = [
       slug: "surabaya",
     },
     tiers: [
-      { price: 350000, quantity: 10 },
-      { price: 300000, quantity: 20 },
+      { id:1, price: 350000, quantity: 10 },
+      { id:2, price: 300000, quantity: 20 },
     ],
   },
   {
@@ -108,8 +109,8 @@ export const packages: Package[] = [
       slug: "jakarta",
     },
     tiers: [
-      { price: 50000, quantity: 100 },
-      { price: 45000, quantity: 200 },
+      { id:1, price: 50000, quantity: 100 },
+      { id:2, price: 45000, quantity: 200 },
     ],
   },
   {
@@ -129,8 +130,8 @@ export const packages: Package[] = [
       slug: "bogor",
     },
     tiers: [
-      { price: 18000, quantity: 25 },
-      { price: 16000, quantity: 50 },
+      { id:1, price: 18000, quantity: 25 },
+      { id:2, price: 16000, quantity: 50 },
     ],
   },
 ];
