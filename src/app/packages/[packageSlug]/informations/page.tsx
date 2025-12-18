@@ -87,7 +87,7 @@ export default function PackageInformationsPage({
               <div className="flex justify-between items-center rounded-2xl border-2 border-dashed p-3">
                 <div>
                   <h3 className="font-bold text-base text-gray-800">
-                    {currentTier.name}
+                    {pkg.name}
                   </h3>
                   <p className="text-sm text-gray-500">
                     {quantity} people
