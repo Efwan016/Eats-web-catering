@@ -1,6 +1,9 @@
-export default function PhoneIcon() {
+import React from 'react';
+
+export default function PhoneIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg
+                    {...props}
                     width="24"
                     height="25"
                     viewBox="0 0 24 25"

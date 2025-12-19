@@ -1,8 +1,9 @@
 import React from 'react';
 
-export default function User(props: React.SVGProps<SVGSVGElement>) {
+export default function User({ className, ...props }: React.ComponentPropsWithoutRef<'svg'>) {
     return (
         <svg
+            className={className}
             {...props}
             width="24"
             height="24"

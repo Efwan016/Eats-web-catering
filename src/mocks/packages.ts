@@ -12,8 +12,13 @@ export interface PackageCity {
 
 export interface PackageTier {
   id: number;
+  name: string;
+  tagline: string;
   price: number;
   quantity: number;
+  duration: string;
+  photo: string;
+  benefits: string[];
 }
 
 export interface Package {
@@ -46,9 +51,67 @@ export const packages: Package[] = [
       slug: "jakarta",
     },
     tiers: [
-      { id:1, price: 25000, quantity: 20 },
-      { id:2,price: 22000, quantity: 50 },
+  {
+    id: 1,
+    name: "Silver Package",
+    tagline: "Best for small events",
+    price: 25000,
+    quantity: 50,
+    duration: "4 Hours",
+    photo: "/images/tier/tier-silver.jpg",
+    benefits: [
+      "Free delivery",
+      "Free mineral water",
+      "Standard cutlery",
     ],
+  },
+  {
+    id: 2,
+    name: "Gold Package",
+    tagline: "Perfect for medium events",
+    price: 35000,
+    quantity: 100,
+    duration: "6 Hours",
+    photo: "/images/tier/tier-gold.jpg",
+    benefits: [
+      "Free delivery",
+      "Premium cutlery",
+      "Free dessert",
+    ],
+  },
+  {
+    id: 3,
+    name: "Platinum Package",
+    tagline: "Luxury catering experience",
+    price: 50000,
+    quantity: 200,
+    duration: "8 Hours",
+    photo: "/images/tier/tier-platinum.jpg",
+    benefits: [
+      "Free delivery",
+      "VIP service",
+      "Live cooking",
+    ],
+  },
+  {
+    id: 4,
+    name: "Diamond Package",
+    tagline: "Luxury catering for VIP events",
+    price: 75000,
+    quantity: 300,
+    duration: "8 Hours",
+    photo: "/images/tier/tier-diamond.jpg",
+    benefits: [
+      "Free Delivery",
+      "Custom Menu",
+      "Dessert & Premium Drinks",
+      "Professional Service Crew",
+      "Full Decoration",
+      "Event Coordinator",
+    ]
+  },
+]
+
   },
   {
     id: 2,
@@ -67,9 +130,67 @@ export const packages: Package[] = [
       slug: "bandung",
     },
     tiers: [
-      { id:1, price: 15000, quantity: 30 },
-      { id:2, price: 13000, quantity: 60 },
+  {
+    id: 1,
+    name: "Silver Package",
+    tagline: "Best for small events",
+    price: 25000,
+    quantity: 50,
+    duration: "4 Hours",
+    photo: "/images/jpg/tier-silver.jpg",
+    benefits: [
+      "Free delivery",
+      "Free mineral water",
+      "Standard cutlery",
     ],
+  },
+  {
+    id: 2,
+    name: "Gold Package",
+    tagline: "Perfect for medium events",
+    price: 35000,
+    quantity: 100,
+    duration: "6 Hours",
+    photo: "/images/tier/tier-gold.jpg",
+    benefits: [
+      "Free delivery",
+      "Premium cutlery",
+      "Free dessert",
+    ],
+  },
+  {
+    id: 3,
+    name: "Platinum Package",
+    tagline: "Luxury catering experience",
+    price: 50000,
+    quantity: 200,
+    duration: "8 Hours",
+    photo: "/images/tier/tier-platinum.jpg",
+    benefits: [
+      "Free delivery",
+      "VIP service",
+      "Live cooking",
+    ],
+  },
+  {
+    id: 4,
+    name: "Diamond Package",
+    tagline: "Luxury catering for VIP events",
+    price: 75000,
+    quantity: 300,
+    duration: "8 Hours",
+    photo: "/images/tier/tier-diamond.jpg",
+    benefits: [
+      "Free Delivery",
+      "Custom Menu",
+      "Dessert & Premium Drinks",
+      "Professional Service Crew",
+      "Full Decoration",
+      "Event Coordinator",
+    ]
+  },
+]
+
   },
   {
     id: 3,
@@ -87,10 +208,67 @@ export const packages: Package[] = [
       name: "Surabaya",
       slug: "surabaya",
     },
-    tiers: [
-      { id:1, price: 350000, quantity: 10 },
-      { id:2, price: 300000, quantity: 20 },
+   tiers: [
+  {
+    id: 1,
+    name: "Silver Package",
+    tagline: "Best for small events",
+    price: 25000,
+    quantity: 50,
+    duration: "4 Hours",
+    photo: "/images/tier/tier-silver.jpg",
+    benefits: [
+      "Free delivery",
+      "Free mineral water",
+      "Standard cutlery",
     ],
+  },
+  {
+    id: 2,
+    name: "Gold Package",
+    tagline: "Perfect for medium events",
+    price: 35000,
+    quantity: 100,
+    duration: "6 Hours",
+    photo: "/images/tier/tier-gold.jpg",
+    benefits: [
+      "Free delivery",
+      "Premium cutlery",
+      "Free dessert",
+    ],
+  },
+  {
+    id: 3,
+    name: "Platinum Package",
+    tagline: "Luxury catering experience",
+    price: 50000,
+    quantity: 200,
+    duration: "8 Hours",
+    photo: "/images/tier/tier-platinum.jpg",
+    benefits: [
+      "Free delivery",
+      "VIP service",
+      "Live cooking",
+    ],
+  },
+  {
+    id: 4,
+    name: "Diamond Package",
+    tagline: "Luxury catering for VIP events",
+    price: 75000,
+    quantity: 300,
+    duration: "8 Hours",
+    photo: "/images/tier/tier-diamond.jpg",
+    benefits: [
+      "Free Delivery",
+      "Custom Menu",
+      "Dessert & Premium Drinks",
+      "Professional Service Crew",
+      "Full Decoration",
+      "Event Coordinator",
+    ]
+  },
+]
   },
   {
     id: 4,
@@ -109,9 +287,67 @@ export const packages: Package[] = [
       slug: "jakarta",
     },
     tiers: [
-      { id:1, price: 50000, quantity: 100 },
-      { id:2, price: 45000, quantity: 200 },
+  {
+    id: 1,
+    name: "Silver Package",
+    tagline: "Best for small events",
+    price: 25000,
+    quantity: 50,
+    duration: "4 Hours",
+    photo: "/images/tier/tier-silver.jpg",
+    benefits: [
+      "Free delivery",
+      "Free mineral water",
+      "Standard cutlery",
     ],
+  },
+  {
+    id: 2,
+    name: "Gold Package",
+    tagline: "Perfect for medium events",
+    price: 35000,
+    quantity: 100,
+    duration: "6 Hours",
+    photo: "/images/tier/tier-gold.jpg",
+    benefits: [
+      "Free delivery",
+      "Premium cutlery",
+      "Free dessert",
+    ],
+  },
+  {
+    id: 3,
+    name: "Platinum Package",
+    tagline: "Luxury catering experience",
+    price: 50000,
+    quantity: 200,
+    duration: "8 Hours",
+    photo: "/images/tier/tier-platinum.jpg",
+    benefits: [
+      "Free delivery",
+      "VIP service",
+      "Live cooking",
+    ],
+  },
+  {
+    id: 4,
+    name: "Diamond Package",
+    tagline: "Luxury catering for VIP events",
+    price: 75000,
+    quantity: 300,
+    duration: "8 Hours",
+    photo: "/images/tier/tier-diamond.jpg",
+    benefits: [
+      "Free Delivery",
+      "Custom Menu",
+      "Dessert & Premium Drinks",
+      "Professional Service Crew",
+      "Full Decoration",
+      "Event Coordinator",
+    ]
+  },
+]
+
   },
   {
     id: 5,
@@ -130,9 +366,66 @@ export const packages: Package[] = [
       slug: "bogor",
     },
     tiers: [
-      { id:1, price: 18000, quantity: 25 },
-      { id:2, price: 16000, quantity: 50 },
+  {
+    id: 1,
+    name: "Silver Package",
+    tagline: "Best for small events",
+    price: 25000,
+    quantity: 50,
+    duration: "4",
+    photo: "/images/tier/tier-silver.jpg",
+    benefits: [
+      "Free delivery",
+      "Free mineral water",
+      "Standard cutlery",
     ],
+  },
+  {
+    id: 2,
+    name: "Gold Package",
+    tagline: "Perfect for medium events",
+    price: 35000,
+    quantity: 100,
+    duration: "6 Hours",
+    photo: "/images/tier/tier-gold.jpg",
+    benefits: [
+      "Free delivery",
+      "Premium cutlery",
+      "Free dessert",
+    ],
+  },
+  {
+    id: 3,
+    name: "Platinum Package",
+    tagline: "Luxury catering experience",
+    price: 50000,
+    quantity: 200,
+    duration: "8 Hours",
+    photo: "/images/tier/tier-platinum.jpg",
+    benefits: [
+      "Free delivery",
+      "VIP service",
+      "Live cooking",
+    ],
+  },
+  {
+    id: 4,
+    name: "Diamond Package",
+    tagline: "Luxury catering for VIP events",
+    price: 75000,
+    quantity: 300,
+    duration: "8 Hours",
+    photo: "/images/tier/tier-diamond.jpg",
+    benefits: [
+      "Free Delivery",
+      "Custom Menu",
+      "Dessert & Premium Drinks",
+      "Professional Service Crew",
+      "Full Decoration",
+      "Event Coordinator",
+    ]
+  },
+]
   },
 ];
 

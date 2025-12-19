@@ -9,9 +9,7 @@ import Promo from "@/aseets/icons/Promo";
 import Truck from "@/aseets/icons/Truck";
 import User from "@/aseets/icons/User";
 
-type Props = object;
-
-export default function Form({}: Props) {
+export default function Form() {
   return (
     <>
       <div className="px-4">
@@ -80,7 +78,7 @@ export default function Form({}: Props) {
                 Phone
               </label>
               <div className="relative">
-                <Phone  />
+                <Phone className="absolute top-1/2 -translate-y-1/2 left-4 text-gray-500" />
                 <input
                   type="tel"
                   id="phone"
