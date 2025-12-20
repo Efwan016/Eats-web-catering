@@ -3,13 +3,12 @@
 import ArrowCircleLeft from "@/aseets/icons/Arrow-circle-left";
 import { useRouter } from "next/navigation";
 
-type Props = {};
 
-export default function ComposeHeader({}: Props) {
+export default function ComposeHeader() {
   const router = useRouter();
 
   return (
-    <header className="bg-gray-50 pt-6 pb-24">
+    <header className="bg-gray-50 pt-16 pb-24">
       <div className="px-4">
         <div className="flex items-center gap-x-3">
           <button onClick={() => router.back()}>

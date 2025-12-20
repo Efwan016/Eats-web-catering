@@ -4,30 +4,31 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 import ArrowCircleLeft from "@/aseets/icons/Arrow-circle-left";
+import { PackageTier } from "@/mocks/packages";
+import { formatCurrency } from "./formatCurrency";
+import Form from "./Form";
 
 type Props = {
-  children: React.ReactNode;
+  tier: PackageTier;
   packageSlug: string;
-  tierId: string;
-  price: number;
 };
 
 export default function FormWrapper({
-  children,
+  tier,
   packageSlug,
-  tierId,
-  price,
 }: Props) {
   const searchParams = useSearchParams();
   const quantity = searchParams.get("quantity") ?? "0";
+  const numericQuantity = Number(quantity);
 
-  const total = (price ?? 0) * parseInt(quantity);
-  const tax = total * 0.11;
-  const grandTotal = total + tax;
+  const subtotal = tier.price * numericQuantity;
+  const tax = subtotal * 0.11;
+  const grandTotal = subtotal + tax;
+
 
   return (
     <form>
-      <div className="px-4">{children}</div>
+      <Form tier={tier} tax={tax} grandTotal={grandTotal} />
 
       {/* CTA */}
       <section className="sticky bottom-0 bg-white py-4 shadow-[0_-4px_20px_0_#0000000D]">
@@ -35,14 +36,15 @@ export default function FormWrapper({
           <div className="flex justify-between items-center bg-gray-100 p-3 rounded-full">
             <div>
               <p className="text-sm text-gray-500">Grand Total</p>
-              <p className="font-bold text-lg">
-                Rp{grandTotal.toLocaleString("id-ID")}
-              </p>
+              <p className="font-bold text-lg">{formatCurrency(grandTotal)}</p>
             </div>
             <Link
               href={{
                 pathname: `/packages/${packageSlug}/payments`,
-                query: { tier: tierId, quantity },
+                query: { // Use tierId for consistency
+                  tierId: tier.id,
+                  quantity,
+                },
               }}
               className="bg-amber-500 text-white rounded-full flex items-center gap-x-2 p-4 font-bold"
             >

@@ -7,7 +7,6 @@ import { packages } from "@/mocks/packages";
 import ComposeHeader from "./ComposeHeader";
 import Notes from "@/aseets/icons/Notes";
 import People from "@/aseets/icons/People";
-import Form from "./Form";
 import FormWrapper from "./FormWrapper";
 
 type Props = {
@@ -19,13 +18,12 @@ type Props = {
   };
 };
 
-export default function PackageInformationsPage({
+export default async function PackageInformationsPage({
   params,
   searchParams,
 }: Props) {
-  const { packageSlug } = params;
-  const tierId = searchParams.tier;
-  const quantity = searchParams.quantity;
+  const { packageSlug } = await params;  
+  const { tierId, quantity } = await searchParams; 
 
   const pkg = packages.find(
     (p) => p.slug === packageSlug
@@ -45,11 +43,18 @@ export default function PackageInformationsPage({
       ? tiers.reduce((max, curr) => (curr.price > max.price ? curr : max))
       : null;
 
-  const currentTier = tiers.find((t) => String(t.id) === tierId);
+const resolvedTier =
+  tiers.find((t) => String(t.id) === String(tierId)) ??
+  lowestTier;
+
+if (!resolvedTier) return notFound();
+
 
   return (
     <div className="bg-gray-50">
       <ComposeHeader />
+      <br />
+      <br />
 
       {/* INFO */}
       <section className="relative px-4 -mt-20 z-10">
@@ -61,6 +66,7 @@ export default function PackageInformationsPage({
                 alt={pkg.name}
                 fill
                 priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover"
               />
             </figure>
@@ -81,7 +87,7 @@ export default function PackageInformationsPage({
             </div>
           </div>
 
-          {!!currentTier && (
+          {!!resolvedTier && (
             <div>
               <h2 className="font-bold mb-3">Tier Package</h2>
               <div className="flex justify-between items-center rounded-2xl border-2 border-dashed p-3">
@@ -94,8 +100,8 @@ export default function PackageInformationsPage({
                   </p>
                 </div>
                 <Link
-                  href={`/packages/${packageSlug}/tiers?tier=${tierId}`}
-                  className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold"
+                  href={`/packages/${packageSlug}/tiers`}
+                  className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold hover:bg-amber-600 hover:text-white transition-colors"
                 >
                   Change
                 </Link>
@@ -109,11 +115,9 @@ export default function PackageInformationsPage({
       <section className="bg-white mt-4 py-6">
         <FormWrapper
           packageSlug={packageSlug}
-          tierId={String(tierId)}
-          price={currentTier?.price ?? 0}
-        >
-          <Form />
-        </FormWrapper>
+          tier={resolvedTier}
+        />
+
       </section>
     </div>
   );

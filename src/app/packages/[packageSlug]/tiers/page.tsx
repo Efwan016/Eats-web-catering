@@ -28,8 +28,6 @@ export default async function PackageTiersPage({ params }: Props) {
 
   const tiers = pkg.tiers ?? []
 
-
-
   const lowestTier =
     tiers.length > 0
       ? tiers.reduce((min, curr) =>
@@ -46,68 +44,69 @@ export default async function PackageTiersPage({ params }: Props) {
 
 
   return (
-    <>
+    <div className="bg-gray-50 min-h-screen">
       <ComposeHeader />
-      <br/>
-      <br/>
-      <br/>
+      <br />
+      <br />
+      <br />
 
-      <section className="relative px-4 -mt-24 z-10">
-        <div className="flex gap-x-4 bg-white/90 backdrop-blur-xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] p-5 rounded-3xl border border-gray-100">
-          <figure className="w-24 h-24 relative rounded-2xl overflow-hidden shrink-0">
-            <Image
-              src={pkg.thumbnail}
-              alt={pkg.name}
-              fill
-              priority
-              unoptimized
-              className="object-cover"
-            />
-          </figure>
+      <main className="relative z-10 -mt-20 pb-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* INFO CARD */}
+          <section className="mb-8">
+            <div className="flex items-center gap-x-5 rounded-2xl border border-gray-100 bg-white/80 p-5 shadow-lg backdrop-blur-xl">
+              <figure className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl">
+                <Image
+                  src={pkg.thumbnail}
+                  alt={pkg.name}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 96px"
+                  className="object-cover"
+                />
+              </figure>
 
-          <div className="flex flex-col gap-y-2 justify-center">
-            <h1 className="font-semibold text-xl text-gray-900 leading-tight">
-              {pkg.name}
-            </h1>
+              <div className="flex flex-col gap-y-1.5">
+                <h1 className="text-xl font-bold leading-tight text-gray-900">
+                  {pkg.name}
+                </h1>
 
-            <span className="flex items-center gap-x-2 text-gray-500 text-sm">
-              <Notes />
-              {pkg.category.name}
-            </span>
+                <span className="flex items-center gap-x-2 text-sm text-gray-600">
+                  <Notes  />
+                  {pkg.category.name}
+                </span>
 
-            <span className="flex items-center gap-x-2 text-gray-500 text-sm">
-              <People />
-              {lowestTier?.quantity ?? 0} – {highestTier?.quantity ?? 0} People
-            </span>
-          </div>
+                <span className="flex items-center gap-x-2 text-sm text-gray-600">
+                  <People  />
+                  {lowestTier?.quantity ?? 0} – {highestTier?.quantity ?? 0} People
+                </span>
+              </div>
+            </div>
+          </section>
+
+          {/* TIERS LIST */}
+          <section>
+            <div className="flex flex-col gap-y-5">
+              {tiers.map((tier) => (
+                <ContentTier
+                  key={tier.id}
+                  data={tier}
+                  packageSlug={packageSlug}
+                  isPriceShown
+                  cta={
+                    <Link
+                      href={`/packages/${packageSlug}/informations?tierId=${tier.id}&quantity=${tier.quantity}`}
+                      className="group inline-block w-full rounded-full bg-gray-300 px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    >
+                      Choose Package
+                    </Link>
+                  }
+                />
+              ))}
+            </div>
+          </section>
         </div>
-      </section>
-
-
-      <section className="bg-linear-to-b from-white to-gray-50 pt-12 pb-28 px-4">
-  <div className="flex flex-col gap-y-6">
-    {tiers.map((tier) => (
-      <ContentTier
-        key={tier.id}
-        data={tier}
-        packageSlug={packageSlug}
-        isPriceShown
-        cta={
-          <Link
-            href={`/packages/${packageSlug}/informations?tier=${tier.id}`}
-            className="group w-full py-3 rounded-full border border-gray-200 text-center font-semibold
-              hover:bg-amber-500 hover:text-white transition-all"
-          >
-            Choose Package →
-          </Link>
-        }
-      />
-    ))}
-  </div>
-</section>
-
-
-
-    </>
+      </main>
+    </div>
   )
 }
