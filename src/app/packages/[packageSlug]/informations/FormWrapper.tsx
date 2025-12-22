@@ -28,7 +28,7 @@ export default function FormWrapper({
 
   return (
     <form>
-      <Form tier={tier} tax={tax} grandTotal={grandTotal} />
+      <Form packageSlug={packageSlug} tier={tier} tax={tax} grandTotal={grandTotal} />
 
       {/* CTA */}
       <section className="sticky bottom-0 bg-white py-4 shadow-[0_-4px_20px_0_#0000000D]">

@@ -13,6 +13,7 @@ export interface PackageCity {
 export interface PackageTier {
   id: number;
   name: string;
+  slug?: string;
   tagline: string;
   price: number;
   quantity: number;
@@ -26,6 +27,7 @@ export interface Package {
   name: string;
   slug: string;
   thumbnail: string;
+  about: string;
   is_popular: 0 | 1;
   category: PackageCategory;
   city: PackageCity;
@@ -39,6 +41,7 @@ export const packages: Package[] = [
     name: "Nasi Box Premium",
     slug: "nasi-box-premium",
     thumbnail: "/images/categories/nasi-box.png",
+    about: "Premium catering package for events and weddings",
     is_popular: 1,
     category: {
       id: 1,
@@ -118,6 +121,7 @@ export const packages: Package[] = [
     name: "Snack Box Meeting",
     slug: "snack-box-meeting",
     thumbnail: "/images/categories/snack.png",
+    about: "Premium catering package for events and weddings",
     is_popular: 0,
     category: {
       id: 2,
@@ -197,6 +201,7 @@ export const packages: Package[] = [
     name: "Tumpeng Mini",
     slug: "tumpeng-mini",
     thumbnail: "/images/categories/tumpeng.png",
+    about: "Premium catering package for events and weddings",
     is_popular: 1,
     category: {
       id: 3,
@@ -275,6 +280,7 @@ export const packages: Package[] = [
     name: "Prasmanan",
     slug: "prasmanan",
     thumbnail: "/images/categories/prasmanan.png",
+    about: "Premium catering package for events and weddings",
     is_popular: 1,
     category: {
       id: 4,
@@ -354,6 +360,7 @@ export const packages: Package[] = [
     name: "Desserts Box",
     slug: "desserts-box",
     thumbnail: "/images/categories/dessert.png",
+    about: "Premium catering package for events and weddings",
     is_popular: 1,
     category: {
       id: 5,

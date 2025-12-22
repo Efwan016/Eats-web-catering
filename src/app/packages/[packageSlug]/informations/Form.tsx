@@ -14,10 +14,21 @@ import { PackageTier } from "@/mocks/packages";
 import { useEffect, useState } from "react";
 
 type Props = {
+  packageSlug: string;
   tier: PackageTier;
-  tax: number; // Injected by FormWrapper
-  grandTotal: number; // Injected by FormWrapper
+  tax: number;
+  grandTotal: number;
 };
+
+type CheckoutStore = {
+  [slug: string]: {
+    name?: string;
+    email?: string;
+    phone?: string;
+  };
+};
+
+
 type CustomerForm = {
   name: string;
   email: string;
@@ -32,23 +43,45 @@ const defaultForm: CustomerForm = {
 
 
 
-export default function Form({ tier, tax, grandTotal }: Props) {
-  const STORAGE_KEY = `catering_customer_information_${tier.id}`;
+export default function Form({ packageSlug, tier, tax, grandTotal }: Props) {
+ const STORAGE_KEY = "checkout";
+
+
 
   const [form, setForm] = useState<CustomerForm>(() => {
-    if (typeof window === "undefined") return defaultForm;
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? JSON.parse(saved) : defaultForm;
-    } catch {
-      return defaultForm;
-    }
-  });
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
-  }, [form, STORAGE_KEY]);
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return defaultForm;
 
+    const parsed: CheckoutStore = JSON.parse(saved);
+    return {
+      name: parsed[packageSlug]?.name ?? "",
+      email: parsed[packageSlug]?.email ?? "",
+      phone: parsed[packageSlug]?.phone ?? "",
+    };
+  } catch {
+    return defaultForm;
+  }
+});
+
+useEffect(() => {
+  if (!packageSlug) return;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    const prev = saved ? JSON.parse(saved) : {};
+    const next = {
+      ...prev,
+      [packageSlug]: {
+        ...prev[packageSlug],
+        ...form,
+      },
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    // Ignore errors
+  }
+}, [form, packageSlug]);
 
 
   return (
