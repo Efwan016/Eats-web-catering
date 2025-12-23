@@ -52,7 +52,7 @@ type CheckoutItem = {
 
 type TCheckoutStore = Record<string, CheckoutItem>;
 
-const generateTrxId = () => `MOCK-${Date.now()}`;
+const generateTrxId = () => `ADZ-${Date.now()}`;
 
 const formatCurrency = (number: number) => {
   return new Intl.NumberFormat("id-ID", {
@@ -110,6 +110,7 @@ export default function Form({ data, tierId }: Props) {
  const grandTotal = (tier?.price ?? 0) * numericQuantity + tax;
 
 
+
   /* ---------- submit ---------- */
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -138,18 +139,22 @@ export default function Form({ data, tierId }: Props) {
 
     console.log("PAYLOAD", payload);
 
-   checkoutSet((prev) => ({
-      ...prev,
-      [data.slug]: {
-        ...prev[data.slug],
-        ...payload,
-      },
-    }));
+    const newTrxId = generateTrxId();
 
+    const updatedCheckout = {
+      ...checkout,
+      [data.slug]: {
+        ...checkout[data.slug],
+        booking_trx_id: newTrxId,
+      },
+    };
+
+    localStorage.setItem("checkout", JSON.stringify(updatedCheckout));
+    setCheckout(updatedCheckout);
 
     router.push(
-      `/packages/${data.slug}/success?tierId=${tierId}&phone=${saved.phone}&trx-id=${generateTrxId()}`
-    );
+      `/packages/${data.slug}/success?phone=${saved.phone}&trx-id=${newTrxId}`
+);
   };
 
   const updateShipping = (

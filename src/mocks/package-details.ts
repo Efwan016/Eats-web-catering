@@ -1,3 +1,5 @@
+
+
 import { packages, Package } from "./packages";
 import { testimonials, Testimonial } from "./testimonials";
 
@@ -26,6 +28,7 @@ export interface PackageDetails extends Package {
   testimonials: Testimonial[];
   kitchen: PackageKitchen;
 }
+
 
 /* ================= MOCK FETCH ================= */
 
