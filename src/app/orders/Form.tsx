@@ -5,55 +5,58 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { toast } from 'react-toastify';
 
-interface OrderStorage {
-  slug: string;
-  phone: string;
-  booking_trx_id: string;
-  proof?: string;
-}
-
 
 function Form() {
   const route = useRouter();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    const form = e.currentTarget;
-    const phone = (form.phone as HTMLInputElement).value.trim();
-    const trxId = (form.booking_trx_id as HTMLInputElement).value.trim();
+  const form = e.currentTarget;
+  const phone = (form.phone as HTMLInputElement).value.trim();
+  const trxId = (form.booking_trx_id as HTMLInputElement).value.trim();
 
-    if (!phone || !trxId) {
-      toast("Phone and Transaction ID are required");
+  if (!phone || !trxId) {
+    toast("Phone and Transaction ID are required");
+    return;
+  }
+
+  try {
+    const raw = localStorage.getItem("checkout");
+    if (!raw) {
+      toast("Order not found");
       return;
     }
 
-    try {
-      const raw = localStorage.getItem("checkout");
-      if (!raw) {
-        toast("Order not found");
-        return;
+    const store = JSON.parse(raw);
+
+    const entries = Object.entries(store) as [
+      string,
+      {
+        phone: string;
+        booking_trx_id: string;
+        proof?: string;
       }
+    ][];
 
-      const store = JSON.parse(raw);
-      const orders = Object.values(store) as OrderStorage[];
+    const found = entries.find(
+      ([, item]) =>
+        item.phone === phone &&
+        item.booking_trx_id === trxId
+    );
 
-      const found = orders.find(
-        (item) =>
-          item.phone === phone &&
-          item.booking_trx_id === trxId
-      );
-
-      if (!found) {
-        toast("Order not found");
-        return;
-      }
-
-      route.push(`/orders/${found.slug}?phone=${phone}`);
-    } catch (err) {
-      console.error(err);
-      toast("Something went wrong");
+    if (!found) {
+      toast("Order not found");
+      return;
     }
-  };
+
+    const [slug] = found;
+
+    route.push(`/orders/${slug}?phone=${phone}&booking_trx_id=${trxId}`);
+  } catch (err) {
+    console.error(err);
+    toast("Something went wrong");
+  }
+};
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-[380px] mx-auto">

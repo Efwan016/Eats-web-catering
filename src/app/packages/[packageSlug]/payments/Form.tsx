@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation"
 
 import { format } from "date-fns";
 
-import { toast } from "react-toastify";
 import SubmitButton from "@/components/SubmitButton";
 import { PackageDetails } from "@/mocks/package-details";
 import ArrowCircleDown from "@/aseets/icons/Arrow-circle-down";
@@ -112,50 +111,25 @@ export default function Form({ data, tierId }: Props) {
 
 
   /* ---------- submit ---------- */
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    if (!tier) {
-      toast.error("Tier not found");
-      return;
-    }
+  if (!tier) return;
 
-    const payload = {
-      slug: data.slug,
-      packageId: data.id,
-      tierId,
-      name: saved.name,
-      email: saved.email,
-      phone: saved.phone,
-      started_at: saved.started_at,
-      price:  tier.price,
-      quantity: tier.quantity,
-      duration: tier.duration,
-      tax,
-      grandTotal,
-      shipping: savedShipping,
-      proof: saved.proof,
-    };
+  const newTrxId = generateTrxId();
 
-    console.log("PAYLOAD", payload);
+  checkoutSet((prev) => ({
+    ...prev,
+    [data.slug]: {
+      ...prev[data.slug], 
+      booking_trx_id: newTrxId,
+    },
+  }));
 
-    const newTrxId = generateTrxId();
-
-    const updatedCheckout = {
-      ...checkout,
-      [data.slug]: {
-        ...checkout[data.slug],
-        booking_trx_id: newTrxId,
-      },
-    };
-
-    localStorage.setItem("checkout", JSON.stringify(updatedCheckout));
-    setCheckout(updatedCheckout);
-
-    router.push(
-      `/packages/${data.slug}/success?phone=${saved.phone}&trx-id=${newTrxId}`
-);
-  };
+  router.push(
+    `/packages/${data.slug}/success?phone=${saved.phone}&trx-id=${newTrxId}`
+  );
+};
 
   const updateShipping = (
   field: keyof Shipping,
@@ -189,6 +163,7 @@ const handleProofUpload = (file?: File) => {
       [data.slug]: {
         ...prev[data.slug],
         proof: base64,
+        oder_status: "paid"
       },
     }));
   };
